@@ -35,6 +35,13 @@ for %%x in (opencv_world310.dll libiomp5md.dll mklml.dll mkldnn.dll Cntk.Math-%v
   echo %%x>> .\com\microsoft\CNTK\lib\windows\NATIVE_MANIFEST
 )
 
+ 
+for %%x in (zip.dll zlib.dll) do (
+  (copy "%output_dir%/%%x" ".\com\microsoft\CNTK\lib\windows\%%x") && (
+	echo %%x>> .\com\microsoft\CNTK\lib\windows\NATIVE_MANIFEST) || (
+	echo "Could not find %%x, skipping")
+)
+
 copy .\CNTKNativeUtils.java .\com\microsoft\CNTK\CNTKNativeUtils.java
 
 "%JAVA_HOME%\bin\javac" .\com\microsoft\CNTK\*.java || (
